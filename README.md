@@ -33,19 +33,18 @@ big jump happens at once). When the week resets, the hearts refill silently.
 If you already had a status line, the installer keeps it and puts the hearts
 after it. `./install.sh uninstall` puts it back the way it was.
 
-## Want the actual Minecraft sound?
+## The sound
 
-The repo ships an original synthesized grunt (`sounds/oof.wav`, made by
-`sounds/generate.py`) because Minecraft's sounds belong to Mojang and can't be
-redistributed. If you own Minecraft Java Edition, grab the real one from your
-own install:
+You get Minecraft's classic Steve "oof" (`random/classic_hurt.ogg`), the
+original player hurt sound. Mojang's sounds can't be redistributed, so it isn't
+in this repo: `install.sh` runs `get-oof.sh`, which takes it from your own
+Minecraft install if you have one, or else from Mojang's official asset server.
+It checks the file against Mojang's hash and trims the half second of hiss that
+follows the oof. This needs `ffmpeg` (`brew install ffmpeg`).
 
-```bash
-./use-minecraft-sound.sh
-```
-
-It finds `damage/hit1.ogg` in your local Minecraft assets and converts it with
-ffmpeg. You can also point at any file you like:
+Without ffmpeg or a network connection, it falls back to an original
+synthesized grunt (`sounds/oof.wav`, made by `sounds/generate.py`). Run
+`./get-oof.sh` any time to try again. You can also point at any file you like:
 
 ```bash
 export CLAUDE_OOF_SOUND=/path/to/whatever.wav
@@ -55,7 +54,7 @@ export CLAUDE_OOF_SOUND=/path/to/whatever.wav
 
 - Claude Code with a Claude Pro/Max subscription (the weekly limit only exists
   there)
-- `python3`
+- `python3`, plus `ffmpeg` for the Minecraft sound
 - macOS (`afplay`) or Linux (`paplay`/`aplay`)
 
 ## Notes

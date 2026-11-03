@@ -31,6 +31,9 @@ mkdir -p "$DIR"
 cp "$SRC/oof.py" "$DIR/oof.py"
 cp "$SRC/sounds/oof.wav" "$DIR/oof.wav"
 chmod +x "$DIR/oof.py"
+if [ ! -f "$DIR/custom.wav" ] && ! "$SRC/get-oof.sh" "$DIR/custom.wav"; then
+  echo "Couldn't get the Minecraft oof, using the bundled stand-in. Retry later with ./get-oof.sh"
+fi
 
 python3 - "$SETTINGS" "$DIR" <<'PY'
 import json, os, shlex, sys
